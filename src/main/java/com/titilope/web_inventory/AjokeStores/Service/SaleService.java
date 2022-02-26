@@ -2,9 +2,13 @@ package com.titilope.web_inventory.AjokeStores.Service;
 
 import com.titilope.web_inventory.AjokeStores.Entity.Sale;
 import com.titilope.web_inventory.AjokeStores.Repository.SaleRepository;
+import com.titilope.web_inventory.AjokeStores.Utilities.DateUtils;
+import com.titilope.web_inventory.AjokeStores.Utilities.FilterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +34,22 @@ public class SaleService implements CrudService<Sale, Integer>{
             throw new RuntimeException("Did not find sale with id: " + id);
         }
         return sale;
+    }
+
+    public List<Sale> getSalesForToday() {
+        Date endDate = new Date();
+        Date startDate = DateUtils.startOfDayAsDate(endDate);
+        return getSalesBetweenDates(startDate, endDate);
+    }
+
+    public List<Sale> getSalesBetweenDates(Date startDate, Date endDate) {
+        return saleRepository.findByDateSoldBetween(startDate, endDate);
+    }
+
+    public List<Sale> getSalesByFilterRequest(FilterRequest filterRequest) {
+        Date startDate = DateUtils.parseStringToDate(filterRequest.getStartDate());
+        Date endDate = DateUtils.parseStringToDate(filterRequest.getEndDate());
+        return saleRepository.findByDateSoldBetween(startDate, endDate);
     }
 
     @Override

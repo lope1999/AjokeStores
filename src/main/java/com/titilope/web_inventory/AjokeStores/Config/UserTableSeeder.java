@@ -34,7 +34,7 @@ public class UserTableSeeder {
             user.setFirstName("Titilope");
             user.setLastName("Alaga");
             user.setAddress("Union Systems Limited");
-            user.setPhoneNumber("224806865957");
+            user.setPhoneNumber("+2348073637911");
             user.setEmail("titilope@usl.com");
 
 
