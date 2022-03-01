@@ -36,7 +36,7 @@ public class LoginController {
 		return "access-denied";
 	}
 
-	@GetMapping("/register")
+	/*@GetMapping("/register")
 	public String register(Model model) {
 
 		User user = new User();
@@ -58,5 +58,5 @@ public class LoginController {
 
 		return "auth/login";
 
-	}
+	}*/
 }
