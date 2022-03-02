@@ -3,11 +3,14 @@ package com.titilope.web_inventory.AjokeStores.Controller;
 import com.titilope.web_inventory.AjokeStores.Entity.Product;
 import com.titilope.web_inventory.AjokeStores.Entity.ProductSale;
 import com.titilope.web_inventory.AjokeStores.Entity.Sale;
+import com.titilope.web_inventory.AjokeStores.Entity.User;
 import com.titilope.web_inventory.AjokeStores.Service.PackagingUnitService;
 import com.titilope.web_inventory.AjokeStores.Service.ProductSaleService;
 import com.titilope.web_inventory.AjokeStores.Service.ProductService;
 import com.titilope.web_inventory.AjokeStores.Service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +48,10 @@ public class POSController {
     public String processSales(@ModelAttribute("sale") Sale sale) {
 
         sale.setDateSold(new Date());
-        
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        sale.setSalesOfficer((User) auth.getPrincipal());
+
         List<ProductSale> productSales = sale.getProductSales();
 
         double total = 0;
