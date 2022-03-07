@@ -15,28 +15,35 @@
 
         <input type="hidden" th:field="*{id}">
 
+        <label>Product Name</label>
         <input type="text"
                th:field="*{name}"
                class="form-control mb-4 col-4"
                placeholder="Name">
 
+        <label>Description</label>
         <input type="text"
                th:field="*{description}"
                class="form-control mb-4 col-4"
                placeholder="Description">
 
-
-        <input type="text"
+        <label>Unit Quantity:The amount of base product in this package</label>
+        <input type="number"
+               min="1"
                th:field="*{packagingUnit.unitQuantity}"
                class="form-control mb-4 col-4"
                placeholder="Unit Quantity:The amount of base product in this package">
 
-        <input type="text"
+        <label>Stock Quantity:The amount of product in stock</label>
+        <input type="number"
+               min="1"
                th:field="*{packagingUnit.stockQuantity}"
                class="form-control mb-4 col-4"
                placeholder="Stock Quantity:The amount of product in stock">
 
-        <input type="text"
+        <label>Unit Price:price of this package</label>
+        <input type="number"
+               min="1"
                th:field="*{packagingUnit.unitPrice}"
                class="form-control mb-4 col-4"
                placeholder="Unit Price:price of this package">

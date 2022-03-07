@@ -6,6 +6,19 @@
 
 <body>
 <div layout:fragment="content">
+
+    <form action="#" th:action="@{/sales/search}"
+          method="GET">
+        <div class="input-group">
+            <div id="search-autocomplete" class="form-outline">
+                <input type="date" id="form1" class="form-control" placeholder="search sales" name="search"/>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
     <h3>Sale Directory</h3>
     <hr>
     <table class="table table-bordered table-striped">

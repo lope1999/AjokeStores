@@ -6,6 +6,19 @@
 
 <body>
 <div layout:fragment="content">
+
+    <form action="#" th:action="@{/products/search}"
+          method="GET">
+        <div class="input-group">
+            <div id="search-autocomplete" class="form-outline">
+                <input type="search" id="form1" class="form-control" placeholder="search product" name="search"/>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
     <h3>Product Directory</h3>
     <hr>
     <table class="table table-bordered table-striped">
@@ -21,7 +34,7 @@
         </thead>
 
         <tbody>
-        <tr th:each="product : ${products}">
+        <tr th:each="product : ${products.content}">
 
             <td th:text="${product.name}"/>
             <td th:text="${product.description}"/>
@@ -47,6 +60,20 @@
         </tr>
         </tbody>
     </table>
+
+    <div style="float:right">
+        <ul th:if="${products.totalPages > 0}" class="pagination">
+            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                <a th:href="@{/products/list(size=${products.size}, page=${pageNumber})}"
+                    th:text=${pageNumber}
+                    class="page-link">
+
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!--               th:class=" 'page-link' +  ${pageNumber==products.number + 1} ? active"-->
 </div>
 </body>
 </html>

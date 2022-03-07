@@ -2,19 +2,15 @@ package com.titilope.web_inventory.AjokeStores.Controller;
 
 import com.titilope.web_inventory.AjokeStores.Entity.Sale;
 import com.titilope.web_inventory.AjokeStores.Service.ProductSaleService;
+import com.titilope.web_inventory.AjokeStores.Service.ProductService;
 import com.titilope.web_inventory.AjokeStores.Service.SaleService;
-import com.titilope.web_inventory.AjokeStores.Utilities.DateUtils;
 import com.titilope.web_inventory.AjokeStores.Utilities.FilterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("/sales")
@@ -25,6 +21,9 @@ public class SalesController {
 
     @Autowired
     ProductSaleService productSaleService;
+
+    @Autowired
+    ProductService productService;
 
     @GetMapping("/list")
     public String listSales(Model model) {
@@ -53,6 +52,7 @@ public class SalesController {
 
         FilterRequest filterRequest = new FilterRequest();
         model.addAttribute("request", filterRequest);
+        model.addAttribute("products", productService.findLowStockedProducts());
         return "sales/track-sales";
     }
 
@@ -60,6 +60,22 @@ public class SalesController {
     public String trackSalesWithFilter(@ModelAttribute("request")FilterRequest filterRequest, Model model){
         List<Sale> sales = saleService.getSalesByFilterRequest(filterRequest);
         model.addAttribute("sales", sales);
+
         return "sales/track-sales";
+    }
+
+    @GetMapping("/search")
+    public String searchSales(@RequestParam("search") String date, Model model){
+        try{
+            System.out.println(date);
+            List<Sale> sales= saleService.findByDateSold(date);
+
+
+            model.addAttribute("sales", sales);
+        } catch(Exception exception){
+            ///
+        }
+
+        return "sales/list";
     }
 }

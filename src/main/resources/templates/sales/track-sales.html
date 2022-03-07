@@ -25,9 +25,8 @@
                placeholder="End Date">
 
         <button type="submit" class="btn btn-info col-2">Filter</button>
-
-
     </form>
+
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
@@ -56,6 +55,74 @@
 
         </tbody>
     </table>
-    <h3>PIE CHART TO TRACK PRODUCTS </h3>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity In Stock</Q></th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="product : ${products}">
+
+                    <td th:text="${product.name}"/>
+                    <td th:text="${product.packagingUnit.stockQuantity}"/>
+
+                    <td>
+                        <a th:href="@{/products/edit(productId=${product.id})}"
+                           class="btn btn-info btn-sm">
+                            Restock
+                        </a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-sm-6">
+            <div id="chartContainer" style="height: 370px; width: 100%;"> <h3>PIE CHART TO TRACK PRODUCTS </h3></div>
+        </div>
+    </div>
+
+
+    <script layout:fragment="canvas_js">
+
+        window.onload = function() {
+            let dataPoints = [];
+            // fetch the data
+            $.get(window.origin + "/data/find-productSales-by-product", null, function(response) {
+
+                dataPoints = response;
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    theme: "light2", // "light1", "light2", "dark1", "dark2"
+                    exportEnabled: true,
+                    animationEnabled: true,
+                    title: {
+                        text: "Product Sales"
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 25,
+                        toolTipContent: "<b>{label}</b>: {y}%",
+                        showInLegend: "true",
+                        legendText: "{label}",
+                        indexLabelFontSize: 16,
+                        indexLabel: "{label} - {y}%",
+                        dataPoints: dataPoints
+                    }]
+                });
+                chart.render();
+            });
+
+
+
+        }
+    </script>
 </body>
 </html>

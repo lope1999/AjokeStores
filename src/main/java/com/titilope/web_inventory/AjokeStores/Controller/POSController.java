@@ -4,8 +4,6 @@ import com.titilope.web_inventory.AjokeStores.Entity.Product;
 import com.titilope.web_inventory.AjokeStores.Entity.ProductSale;
 import com.titilope.web_inventory.AjokeStores.Entity.Sale;
 import com.titilope.web_inventory.AjokeStores.Entity.User;
-import com.titilope.web_inventory.AjokeStores.Service.PackagingUnitService;
-import com.titilope.web_inventory.AjokeStores.Service.ProductSaleService;
 import com.titilope.web_inventory.AjokeStores.Service.ProductService;
 import com.titilope.web_inventory.AjokeStores.Service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +27,6 @@ public class POSController {
 
     @Autowired
     private SaleService saleService;
-
-    @Autowired
-    private PackagingUnitService packagingUnitService;
 
     @GetMapping("/pointOfSaleForm")
     public String showSalesForm(Model model){
@@ -54,10 +50,10 @@ public class POSController {
 
         List<ProductSale> productSales = sale.getProductSales();
 
-        double total = 0;
+        BigDecimal total = new BigDecimal(0);
         int stockQuantity;
         for (ProductSale productSale : productSales) {
-            total+= productSale.getTotalPrice();
+            total = total.add(productSale.getTotalPrice());
 
             stockQuantity=productSale.getProduct().getPackagingUnit().getStockQuantity();
             stockQuantity-= productSale.getQuantity();

@@ -1,4 +1,4 @@
-package com.titilope.web_inventory.AjokeStores.exception;
+package com.titilope.web_inventory.AjokeStores.Exception;
 
 public class UserAlreadyExistException extends Exception{
 

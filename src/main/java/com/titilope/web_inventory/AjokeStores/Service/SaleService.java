@@ -7,7 +7,6 @@ import com.titilope.web_inventory.AjokeStores.Utilities.FilterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -67,5 +66,10 @@ public class SaleService implements CrudService<Sale, Integer>{
     @Override
     public void deleteById(Integer id) {
         saleRepository.deleteById(id);
+    }
+
+
+    public List<Sale> findByDateSold(String date) throws Exception{
+        return saleRepository.findByDateSold(date);
     }
 }

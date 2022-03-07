@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 @Setter
 @Getter
@@ -22,8 +24,8 @@ public class PackagingUnit extends BaseEntity {
     @Column(name = "stock_quantity")
     private int stockQuantity;
 
-    @Column(name = "unit_price")
-    private double unitPrice;
+    @Column(name = "unit_price", precision = 2)
+    private BigDecimal unitPrice;
 
 
     @Override

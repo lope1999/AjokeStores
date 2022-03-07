@@ -23,21 +23,24 @@
                 </h2>
             </div>
             <nav>
-                <a th:href="@{/products/list}"
-                   class="btn btn-primary btn-sm mb-3">
-                    All Products
+                <div sec:authorize="hasAnyAuthority('MANAGER')">
+                    <a th:href="@{/products/list}"
+                       class="btn btn-primary btn-sm mb-3">
+                        All Products
                 </a>
-                <a th:href="@{/products/create}"
-                   class="btn btn-primary btn-sm mb-3">
-                    Add Product
-                </a>
+                    <a th:href="@{/products/create}"
+                       class="btn btn-primary btn-sm mb-3">
+                        Add Product
+                    </a>
+                    <a th:href="@{/sales/list}"
+                       class="btn btn-primary btn-sm ml-5 mb-3">
+                        Sales List
+                    </a>
+                </div>
+
                 <a th:href="@{/sales/pointOfSaleForm}"
                    class="btn btn-primary btn-sm ml-5 mb-3">
                     Point of Sale
-                </a>
-                <a th:href="@{/sales/list}"
-                   class="btn btn-primary btn-sm ml-5 mb-3">
-                    Sales List
                 </a>
 
                 </a>
@@ -68,6 +71,17 @@
     </div>
 </div>
 
+
+
+<!--
+<script th:fragment="canvas_js" type="text/javascript" th:src="@{/resources/js/canvasjs.stock.min.js}"></script>
+-->
+<script th:fragment="canvas_js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://ajax.gogleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script layout:fragment="jquery_scripts">
+</script>
 </body>
 </html>
 

@@ -12,7 +12,7 @@
           th:object="${sale}"
           method="POST">
 
-        <table class="table table-bordered">
+        <table id="POS_table" class="table table-bordered">
             <thead>
             <tr>
                 <th>Product Name</th>
@@ -23,44 +23,78 @@
             <tbody>
             <tr>
                 <td>
-                    <select name="product_sale" id="1" class="form-control"
+                    <select name="product_sale" id="product_first_row" class="form-control"
                             th:field="*{productSales[0].product}">
                         <option value="">Select a product</option>
-                        <option th:each="product : ${products}" th:text="${product.name} + ' #'+ ${product.packagingUnit.unitPrice} + 'per pack'" th:value="${product.id}"></option>
+                        <option th:each="product : ${products}" th:text="${product.name} + ' #'+ ${product.packagingUnit.unitPrice} + 'per pack ====' + ${product.packagingUnit.stockQuantity} + ' left in stock'" th:value="${product.id}"  ></option>
                     </select>
                 </td>
-                <td><input th:field="*{productSales[0].quantity}" type="text" class="form-control"></td>
-                <td><input th:field="*{productSales[0].totalPrice}" type="text" class="form-control"></td>
+                <td><input th:field="*{productSales[0].quantity}" type="number" min="1" class="form-control"></td>
+                <td><input th:field="*{productSales[0].totalPrice}" type="number" min="1" class="form-control"></td>
             </tr>
 
-            <tr>
-                <td>
-                    <select th:field="*{productSales[1].product}" name="product_sale" id="2" class="form-control">
-                        <option value="">Select a product</option>
-                        <option th:each="product : ${products}" th:text="${product.name} + ' #'+ ${product.packagingUnit.unitPrice} + 'per pack'"  th:value="${product.id}"></option>
-                    </select>
-                </td>
-                <td><input th:field="*{productSales[1].quantity}" type="text" class="form-control"></td>
-                <td><input th:field="*{productSales[1].totalPrice}" type="text" class="form-control"></td>
-            </tr>
-
-            <tr>
-                <td>
-                    <select th:field="*{productSales[2].product}" name="product_sale" id="3" class="form-control">
-                        <option value="">Select a product</option>
-                        <option th:each="product : ${products}" th:text="${product.name} + ' #'+ ${product.packagingUnit.unitPrice} + 'per pack'" th:value="${product.id}"></option>
-                    </select>
-                </td>
-                <td><input th:field="*{productSales[2].quantity}" type="text" class="form-control"></td>
-                <td><input th:field="*{productSales[2].totalPrice}" type="text" class="form-control"></td>
-            </tr>
             </tbody>
         </table>
+        <div>
+            <button id="product_new_row"  style="float: right"  type="button" class="btn btn-info">Add New Row </button>
+       </div>
+
         <button type="submit" class="btn btn-info col-2">Submit</button>
+
 
     </form>
     <hr>
+
+
 </div>
+
+
+
+
+<script layout:fragment="jquery_scripts">
+
+
+    window.onload= function () {
+        var counter = 1; // counter to keep the number of rows added unique.
+
+        let template = '<tr>\n' +
+            '                <td>\n' +
+            '                    <select class="form-control"\n' +
+            '                            name="productSales[%_counter_%].product">\n' +
+            '                        %%options%% \n' +
+            '                    </select>\n' +
+            '                </td>\n' +
+            '                <td><input name="productSales[%_counter_%].quantity" type="number" min="1" class="form-control"></td>\n' +
+            '                <td><input name="productSales[%_counter_%].totalPrice" type="number" min="1" class="form-control"></td>\n' +
+            '                <td><button  class="btn btn-danger btn-sm ml-5 mb-3 delete_row" type="button" class="form-control"> Delete</button></td>\n' +
+            '            </tr>';
+
+
+        let contents = $("#product_first_row").html();
+        template = template.replace("%%options%%", contents);
+
+
+        let formatTemplate = function(counter) {
+            return template.replace(/%_counter_%/g, counter);
+        }
+
+
+        let POSHandler = function () {
+            $("#product_new_row").click(function (event){
+                let parsedTemplate = formatTemplate(counter);
+                $("#POS_table > tbody").append(parsedTemplate);
+                counter++;
+            });
+
+
+            $("#POS_table").on('click', ".delete_row", function(event) {
+                event.currentTarget.parentElement.parentElement.remove();
+            });
+        }
+
+        POSHandler();
+    }
+</script>
 </body>
 
 </html>

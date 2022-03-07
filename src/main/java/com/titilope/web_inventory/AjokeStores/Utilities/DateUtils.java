@@ -1,5 +1,6 @@
 package com.titilope.web_inventory.AjokeStores.Utilities;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -37,5 +38,12 @@ public class DateUtils {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm", Locale.ENGLISH);
         LocalDateTime date = LocalDateTime.parse(dateString, formatter);
         return asDate(date);
+    }
+
+    public static Date parseStringToDateOnly (String dateString) throws Exception{
+        SimpleDateFormat formatter =
+                new SimpleDateFormat("yyyy-MM-dd");
+        Date date = formatter.parse(dateString);
+        return date;
     }
 }

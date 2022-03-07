@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProductSaleService implements CrudService<ProductSale, Integer>{
@@ -47,4 +48,9 @@ public class ProductSaleService implements CrudService<ProductSale, Integer>{
     public void deleteById(Integer id) {
         productSaleRepository.deleteById(id);
     }
+
+
+   /* public Set<ProductSale> findProductSaleBy_Product(){
+        return productSaleRepository.findProductSaleBy_Product();
+    }*/
 }

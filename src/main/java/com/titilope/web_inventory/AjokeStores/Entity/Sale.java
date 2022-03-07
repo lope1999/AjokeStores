@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,8 @@ public class Sale extends BaseEntity{
 
     private Date dateSold;
 
-    private double totalPrice;
+    @Column(name = "total_price", precision = 2)
+    private BigDecimal totalPrice;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "sale_id")

@@ -4,7 +4,7 @@ import com.titilope.web_inventory.AjokeStores.Entity.Role;
 import com.titilope.web_inventory.AjokeStores.Entity.User;
 import com.titilope.web_inventory.AjokeStores.Repository.RoleRepository;
 import com.titilope.web_inventory.AjokeStores.Repository.UserRepository;
-import com.titilope.web_inventory.AjokeStores.exception.UserAlreadyExistException;
+import com.titilope.web_inventory.AjokeStores.Exception.UserAlreadyExistException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
